@@ -7,6 +7,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ? define watcher (example line: 71-76)
+    var state = context.watch<CounterCubit>().state;
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -24,35 +27,35 @@ class HomePage extends StatelessWidget {
             //   child: Container(),
             // ),
             // ? listen and build changes
-            BlocConsumer<CounterCubit, int>(
-              listenWhen: (previous, current) {
-                if (current == 3 || current == 1) {
-                  return true;
-                }
-                return false;
-              },
-              buildWhen: (previous, current) {
-                if (current != 3 || current != 1) {
-                  return true;
-                }
-                return false;
-              },
-              listener: (context, state) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("blocConsumer: value changed"),
-                  ),
-                );
-              },
-              builder: (context, state) {
-                return Text(
-                  state.toString(),
-                  style: const TextStyle(
-                    fontSize: 30,
-                  ),
-                );
-              },
-            ),
+            // BlocConsumer<CounterCubit, int>(
+            //   listenWhen: (previous, current) {
+            //     if (current == 3 || current == 1) {
+            //       return true;
+            //     }
+            //     return false;
+            //   },
+            //   buildWhen: (previous, current) {
+            //     if (current != 3 || current != 1) {
+            //       return true;
+            //     }
+            //     return false;
+            //   },
+            //   listener: (context, state) {
+            //     ScaffoldMessenger.of(context).showSnackBar(
+            //       const SnackBar(
+            //         content: Text("blocConsumer: value changed"),
+            //       ),
+            //     );
+            //   },
+            //   builder: (context, state) {
+            //     return Text(
+            //       state.toString(),
+            //       style: const TextStyle(
+            //         fontSize: 30,
+            //       ),
+            //     );
+            //   },
+            // ),
             // ? only build changes
             // BlocBuilder<CounterCubit, int>(
             //   builder: (context, state) {
@@ -64,6 +67,13 @@ class HomePage extends StatelessWidget {
             //     );
             //   },
             // ),
+            // ? catch changes using watch (line: 10)
+            Text(
+              state.toString(),
+              style: const TextStyle(
+                fontSize: 28,
+              ),
+            ),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -82,6 +92,17 @@ class HomePage extends StatelessWidget {
                   child: const Text('decrease'),
                 ),
               ],
+            ),
+            Builder(
+              builder: (context) {
+                print("rebuild");
+                return Text(
+                  state.toString(),
+                  style: const TextStyle(
+                    fontSize: 28,
+                  ),
+                );
+              },
             ),
           ],
         ),
