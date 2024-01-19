@@ -1,4 +1,4 @@
-[Resume video](https://youtu.be/Mn254cnduOY?t=2592)
+[Resume video](https://youtu.be/hVyqBDGrLQQ?list=PLUvfjeBvMXmX0Z9MoKm5cZMAfGcoJdbXi&t=361)
 
 #### Create project
 

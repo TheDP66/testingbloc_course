@@ -8,43 +8,70 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (context) => CounterCubit(),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              BlocBuilder<CounterCubit, int>(
-                builder: (context, state) {
-                  return Text(
-                    state.toString(),
-                    style: const TextStyle(
-                      fontSize: 30,
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      BlocProvider.of<CounterCubit>(context).increase();
-                    },
-                    child: const Text('increase'),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // ? only listen to changes
+            // BlocListener<CounterCubit, int>(
+            //   listener: (context, state) {
+            //     ScaffoldMessenger.of(context).showSnackBar(
+            //       const SnackBar(
+            //         content: Text("blocListener: value changed"),
+            //       ),
+            //     );
+            //   },
+            //   child: Container(),
+            // ),
+            // ? listen and build changes
+            BlocConsumer<CounterCubit, int>(
+              listener: (context, state) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("blocConsumer: value changed"),
                   ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      BlocProvider.of<CounterCubit>(context).decrease();
-                    },
-                    child: const Text('decrease'),
+                );
+              },
+              builder: (context, state) {
+                return Text(
+                  state.toString(),
+                  style: const TextStyle(
+                    fontSize: 30,
                   ),
-                ],
-              ),
-            ],
-          ),
+                );
+              },
+            ),
+            // ? only build changes
+            // BlocBuilder<CounterCubit, int>(
+            //   builder: (context, state) {
+            //     return Text(
+            //       state.toString(),
+            //       style: const TextStyle(
+            //         fontSize: 30,
+            //       ),
+            //     );
+            //   },
+            // ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    BlocProvider.of<CounterCubit>(context).increase();
+                  },
+                  child: const Text('increase'),
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    BlocProvider.of<CounterCubit>(context).decrease();
+                  },
+                  child: const Text('decrease'),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
