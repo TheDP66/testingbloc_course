@@ -25,6 +25,18 @@ class HomePage extends StatelessWidget {
             // ),
             // ? listen and build changes
             BlocConsumer<CounterCubit, int>(
+              listenWhen: (previous, current) {
+                if (current == 3 || current == 1) {
+                  return true;
+                }
+                return false;
+              },
+              buildWhen: (previous, current) {
+                if (current != 3 || current != 1) {
+                  return true;
+                }
+                return false;
+              },
               listener: (context, state) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
@@ -62,7 +74,7 @@ class HomePage extends StatelessWidget {
                   },
                   child: const Text('increase'),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(width: 30),
                 ElevatedButton(
                   onPressed: () {
                     BlocProvider.of<CounterCubit>(context).decrease();
